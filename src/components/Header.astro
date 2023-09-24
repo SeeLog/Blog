@@ -1,15 +1,25 @@
 ---
-import HeaderLink from './HeaderLink.astro';
+import { Image } from 'astro:assets';
+import icon from '../images/icon.png';
 import { SITE_TITLE } from '../consts';
+import ThemeButton from './ThemeButton';
 ---
 
 <header>
-	<nav class="navbar bg-base-100">
-		<h2 class="text-2xl"><a href="/">{SITE_TITLE}</a></h2>
-		<div class="internal-links">
-			<HeaderLink href="/">Home</HeaderLink>
-			<HeaderLink href="/blog">Blog</HeaderLink>
-			<HeaderLink href="/about">About</HeaderLink>
-		</div>
-	</nav>
+  <nav class="navbar">
+    <a href="/" class="flex-1">
+      <Image src={icon} alt="ろぐみのおきもち" width={48} />
+      <h2 class="text-2xl pl-2">
+        {SITE_TITLE}
+      </h2>
+    </a>
+    <div>
+      <ul class="menu menu-horizontal flex rounded-box">
+        <li>
+          <a href="https://seelog.me/" target="_blank">About me</a>
+        </li>
+      </ul>
+      <ThemeButton client:idle />
+    </div>
+  </nav>
 </header>

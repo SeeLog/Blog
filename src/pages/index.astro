@@ -4,6 +4,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import { type BlogPostSkeleton, contentfulClient } from '../lib/contentful';
+import Layout from '../components/Layout.astro';
 
 const entries = await contentfulClient.getEntries<BlogPostSkeleton, string>({
   content_type: 'blogPost',
@@ -19,26 +20,14 @@ const posts = entries.items.map((item) => {
 });
 ---
 
-<!doctype html>
-<html lang="ja">
-  <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-  </head>
-  <body class="flex flex-col items-center h-screen h-[100svh]">
-    <div class="w-full max-w-3xl flex-grow">
-      <Header title={SITE_TITLE} />
-      <main>
-        <ul>
-          {
-            posts.map((post) => (
-              <li>
-                <a href="">{post.title}</a>
-              </li>
-            ))
-          }
-        </ul>
-      </main>
-      <Footer />
-    </div>
-  </body>
-</html>
+<Layout>
+  <ul>
+    {
+      posts.map((post) => (
+        <li>
+          <a href="">{post.title}</a>
+        </li>
+      ))
+    }
+  </ul>
+</Layout>

@@ -1,0 +1,48 @@
+---
+import BaseHead from './BaseHead.astro';
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body class="flex flex-col items-center h-screen h-[100svh]">
+    <div class="w-full max-w-3xl flex-grow">
+      <Header title={SITE_TITLE} />
+      <main>
+        <slot />
+      </main>
+      <Footer />
+    </div>
+    <script is:inline>
+      const theme = (() => {
+        if (
+          typeof window.localStorage !== 'undefined' &&
+          typeof window.localStorage.getItem('theme') === 'string'
+        ) {
+          return window.localStorage.getItem('theme');
+        }
+
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          return 'dracula';
+        }
+
+        return 'cupcake';
+      })();
+
+      if (theme === 'cupcake') {
+        document.documentElement.setAttribute('data-theme', 'cupcake');
+        document.documentElement.classList.remove('dark');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dracula');
+        document.documentElement.classList.add('dark');
+      }
+
+      window.localStorage.setItem('theme', theme);
+    </script>
+  </body>
+</html>
