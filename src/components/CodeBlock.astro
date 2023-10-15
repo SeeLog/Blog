@@ -1,0 +1,12 @@
+---
+import hljs from 'highlight.js';
+const { lang: origLang, code, ...props } = Astro.props;
+
+const [
+  lang,
+  filename,
+] = origLang.split(':');
+const highlighted = hljs.highlight(lang, code).value;
+---
+
+<pre class={`language-${lang}`}><div>{filename}</div><code set:html={highlighted} /></pre>

@@ -1,0 +1,27 @@
+---
+import { twMerge } from 'tailwind-merge';
+import clsx from 'clsx';
+
+interface Props {
+  as?: string;
+  href?: string;
+  className?: string;
+}
+
+const { as: Component, href } = Astro.props;
+
+const cls = twMerge(
+  clsx({
+    'text-4xl': Component === 'h1',
+    'text-2xl': Component === 'h2',
+    'text-xl': Component === 'h3',
+    'text-lg': Component === 'h4',
+    'text-base': Component === 'h5',
+    'text-sm': Component === 'h6',
+  }),
+);
+---
+
+<Component class={cls}>
+  <a href={href}><slot /></a>
+</Component>

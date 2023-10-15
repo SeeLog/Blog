@@ -1,0 +1,37 @@
+---
+import { type CollectionEntry } from 'astro:content';
+import { Markdown } from 'astro-remote';
+import { contentfulClient, type BlogPost } from '../../lib/contentful';
+import CodeBlock from '../../components/CodeBlock.astro';
+import Heading from '../../components/Heading.astro';
+import Layout from '../../components/Layout.astro';
+
+export async function getStaticPaths() {
+	const entries = await contentfulClient.getEntries({
+		content_type: 'blogPost',
+	});
+	const pages = entries.items.map((entry) => ({
+		params: { slug: entry.fields.slug },
+		props: {
+			title: entry.fields.title,
+			content: entry.fields.content,
+			date: new Date(entry.fields.date?.toString() ?? '').toLocaleDateString(),
+		}
+	}));
+	return pages;
+}
+type Props = BlogPost;
+
+const post = Astro.props;
+---
+
+<Layout>
+	<h1>{post.title}</h1>
+	<p>{post.date}</p>
+	<Markdown content={post.content} components={
+		{
+			CodeBlock,
+			Heading,
+		}
+	} />
+</Layout>
