@@ -9,29 +9,29 @@ interface Props {
   code: string;
 }
 
-const { lang: origLang, code } = Astro.props;
+const { lang: origLang, code: origCode } = Astro.props;
 
-const [lang, filename] = origLang.split(':');
-const highlighted = hljs.highlight(lang, code.trim()).value;
+const [lang, title] = origLang.split(':');
+const code = lang ? hljs.highlight(lang, origCode.trim()).value : origCode.trim();
 
 const preClasses = twMerge(
   `language-${lang} bg-neutral-700 dark:bg-neutral-800 text-neutral-content p-4 shadow-lg overflow-x-auto`,
   clsx({
-    'rounded-b-xl': filename,
-    'rounded-e-xl': filename,
-    'rounded-xl': !filename,
+    'rounded-b-xl': title,
+    'rounded-e-xl': title,
+    'rounded-xl': !title,
   }),
 );
 ---
 
-<div class="my-2">
+<div class="my-6">
   {
-    filename && (
+    title && (
       <span class="bg-neutral text-neutral-content px-3 py-1 rounded-t-xl shadow-xl">
-        {filename}
+        {title}
       </span>
     )
   }
 
-  <pre class={preClasses}><code set:html={highlighted} /></pre>
+  <pre class={preClasses}><code set:html={code} /></pre>
 </div>
