@@ -7,18 +7,18 @@ import Heading from '../../components/Heading.astro';
 import Layout from '../../components/Layout.astro';
 
 export async function getStaticPaths() {
-	const entries = await contentfulClient.getEntries({
-		content_type: 'blogPost',
-	});
-	const pages = entries.items.map((entry) => ({
-		params: { slug: entry.fields.slug },
-		props: {
-			title: entry.fields.title,
-			content: entry.fields.content,
-			date: new Date(entry.fields.date?.toString() ?? '').toLocaleDateString(),
-		}
-	}));
-	return pages;
+  const entries = await contentfulClient.getEntries({
+    content_type: 'blogPost',
+  });
+  const pages = entries.items.map((entry) => ({
+    params: { slug: entry.fields.slug },
+    props: {
+      title: entry.fields.title,
+      content: entry.fields.content,
+      date: new Date(entry.fields.date?.toString() ?? '').toLocaleDateString(),
+    },
+  }));
+  return pages;
 }
 type Props = BlogPost;
 
@@ -26,12 +26,15 @@ const post = Astro.props;
 ---
 
 <Layout>
-	<h1>{post.title}</h1>
-	<p>{post.date}</p>
-	<Markdown content={post.content} components={
-		{
-			CodeBlock,
-			Heading,
-		}
-	} />
+  <h1>{post.title}</h1>
+  <p>{post.date}</p>
+  <div class="bg-base-200 px-4 p-2 rounded-xl">
+    <Markdown
+      content={post.content}
+      components={{
+        CodeBlock,
+        Heading,
+      }}
+    />
+  </div>
 </Layout>

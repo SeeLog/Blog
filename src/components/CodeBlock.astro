@@ -1,12 +1,37 @@
 ---
+import { twMerge } from 'tailwind-merge';
+import clsx from 'clsx';
 import hljs from 'highlight.js';
+import 'highlight.js/styles/github-dark-dimmed.css';
+
+interface Props {
+  lang: string;
+  code: string;
+}
+
 const { lang: origLang, code, ...props } = Astro.props;
 
-const [
-  lang,
-  filename,
-] = origLang.split(':');
-const highlighted = hljs.highlight(lang, code).value;
+const [lang, filename] = origLang.split(':');
+const highlighted = hljs.highlight(lang, code.trim()).value;
+
+const preClasses = twMerge(
+  `language-${lang} bg-neutral-700 text-neutral-content p-4 shadow-lg text-xs`,
+  clsx({
+    'rounded-b-xl': filename,
+    'rounded-e-xl': filename,
+    'rounded-xl': !filename,
+  }),
+);
 ---
 
-<pre class={`language-${lang}`}><div>{filename}</div><code set:html={highlighted} /></pre>
+<div class="my-2">
+  {
+    filename && (
+      <span class="bg-neutral text-neutral-content px-3 py-1 rounded-t-xl shadow-xl text-xs">
+        {filename}
+      </span>
+    )
+  }
+
+  <pre class={preClasses}><code set:html={highlighted} /></pre>
+</div>
