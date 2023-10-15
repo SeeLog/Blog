@@ -6,7 +6,7 @@ const iconSize = 24;
 
 export default function ThemeButton() {
   const [theme, setTheme] = useState<'dracula' | 'cupcake' | undefined>(
-    undefined
+    undefined,
   );
 
   useEffect(() => {
@@ -18,7 +18,7 @@ export default function ThemeButton() {
 
       if (localTheme === null) {
         const prefersDark = window.matchMedia(
-          '(prefers-color-scheme: dark)'
+          '(prefers-color-scheme: dark)',
         ).matches;
 
         if (prefersDark) {
