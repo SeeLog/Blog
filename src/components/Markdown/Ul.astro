@@ -1,0 +1,17 @@
+---
+import { twMerge } from 'tailwind-merge';
+
+interface Props {
+  className?: string;
+}
+
+const props = Astro.props;
+
+const cls = twMerge(
+  props.className,
+)
+---
+
+<ul class={cls}>
+  <slot />
+</ul>

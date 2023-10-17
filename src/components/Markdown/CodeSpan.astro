@@ -1,0 +1,18 @@
+---
+import { twMerge } from 'tailwind-merge';
+
+interface Props {
+  children: React.ReactNode;
+  code: string;
+  className?: string;
+}
+
+const props = Astro.props;
+
+const cls = twMerge(
+  'bg-accent/25 px-2 py-1.5 rounded-md text-sm font-mono whitespace-pre-wrap',
+  props.className,
+)
+---
+
+<code class={cls} set:html={props.code} />

@@ -2,9 +2,15 @@
 import { type CollectionEntry } from 'astro:content';
 import { Markdown } from 'astro-remote';
 import { contentfulClient, type BlogPost } from '../../lib/contentful';
-import CodeBlock from '../../components/CodeBlock.astro';
-import Heading from '../../components/Heading.astro';
+import CodeBlock from '../../components/Markdown/CodeBlock.astro';
+import CodeSpan from '../../components/Markdown/CodeSpan.astro';
+import Heading from '../../components/Markdown/Heading.astro';
 import Layout from '../../components/Layout.astro';
+import Paragraph from '../../components/Markdown/Paragraph.astro';
+import Link from '../../components/Markdown/Link.astro';
+import Blockquote from '../../components/Markdown/Blockquote.astro';
+import Split from '../../components/Markdown/Split.astro';
+import Ul from '../../components/Markdown/Ul.astro';
 
 export async function getStaticPaths() {
   const entries = await contentfulClient.getEntries({
@@ -15,7 +21,8 @@ export async function getStaticPaths() {
     props: {
       title: entry.fields.title,
       content: entry.fields.content,
-      date: new Date(entry.fields.date?.toString() ?? '').toLocaleDateString(),
+      date:
+        new Date(entry.fields.date?.toString() ?? '').toLocaleDateString()
     },
   }));
   return pages;
@@ -26,14 +33,22 @@ const post = Astro.props;
 ---
 
 <Layout>
-  <h1>{post.title}</h1>
-  <p>{post.date}</p>
-  <div class="bg-base-200 px-4 p-2 rounded-xl">
+  <div class="py-12">
+    <h1 class="text-center text-4xl">{post.title}</h1>
+    <p class="text-center">{post.date}</p>
+  </div>
+  <div class="bg-base-200 px-4 lg:px-8 py-2 lg:py-4 rounded-xl">
     <Markdown
       content={post.content}
       components={{
         CodeBlock,
+				CodeSpan,
         Heading,
+				p: Paragraph,
+        a: Link,
+        hr: Split,
+        ul: Ul,
+        blockquote: Blockquote
       }}
     />
   </div>

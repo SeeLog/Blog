@@ -1,0 +1,16 @@
+---
+import { twMerge } from 'tailwind-merge';
+
+interface Props {
+  className?: string;
+}
+
+const props = Astro.props;
+
+const cls = twMerge(
+  'pl-4 border-l-4 border-neutral-content my-8',
+  props.className,
+)
+---
+
+<blockquote class={cls} {...props}><slot /></p>

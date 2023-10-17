@@ -3,3 +3,29 @@
   https://github.com/HermanMartinus/bearblog/blob/297026a877bc2ab2b3bdfbd6b9f7961c350917dd/templates/styles/blog/default.css
   License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
  */
+
+ul {
+  list-style-type: disc !important;
+  padding-left: 2em !important;
+}
+
+ul > li > ul {
+  list-style-type: circle !important;
+}
+
+ul > li > ul > li > ul {
+  list-style-type: square !important;
+}
+
+ol {
+  list-style-type: decimal !important;
+  padding-left: 2em !important;
+}
+
+ol > li > ol {
+  list-style-type: upper-roman !important;
+}
+
+ol > li > ol > li > ol {
+  list-style-type: lower-alpha !important;
+}

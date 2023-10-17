@@ -1,0 +1,16 @@
+---
+import { twMerge } from 'tailwind-merge';
+
+interface Props {
+  className?: string;
+}
+
+const props = Astro.props;
+
+const cls = twMerge(
+  'border-t-2 border-neutral-content',
+  props.className,
+)
+---
+
+<hr class={cls} {...props} />
