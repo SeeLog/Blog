@@ -2,17 +2,43 @@ import contentful from 'contentful';
 
 export interface BlogPost {
   title: string;
-  category: string;
-  tags: string[];
+  category: CategorySkeleton;
+  tags: TagSkeleton[];
   slug: string;
   date: string;
   description: string;
   content: string;
 }
 
+export interface Category {
+  title: string;
+  image: string;
+  description: string;
+  sort: number;
+  slug: string;
+  isMain: boolean;
+}
+
+export interface Tag {
+  image: string;
+  title: string;
+  slug: string;
+  parentCategory: string;
+}
+
 export interface BlogPostSkeleton {
   contentTypeId: string;
   fields: BlogPost;
+}
+
+export interface CategorySkeleton {
+  contentTypeId: string;
+  fields: Category;
+}
+
+export interface TagSkeleton {
+  contentTypeId: string;
+  fields: Tag;
 }
 
 export const contentfulClient = contentful.createClient({
