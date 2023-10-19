@@ -1,0 +1,39 @@
+---
+import { twMerge } from 'tailwind-merge';
+import InfoIcon from '../icon/Info.astro';
+
+interface Props {
+  type: 'note' | 'warning';
+  className: string;
+}
+
+const border: Record<Props['type'], string> = {
+  note: 'border-info',
+  warning: 'border-warning',
+};
+
+const iconColor: Record<Props['type'], string> = {
+  note: 'text-info',
+  warning: 'text-warning',
+};
+
+const background: Record<Props['type'], string> = {
+  note: 'bg-info/10',
+  warning: 'bg-warning/10',
+};
+
+const { type: noteType, className } = Astro.props;
+
+const Icon = noteType === 'note' ? InfoIcon : InfoIcon;
+
+const cls = twMerge(
+  className,
+  'border rounded-lg p-2 my-4 flex items-center gap-2',
+  border[noteType],
+  background[noteType],
+);
+---
+
+<div class={cls}>
+  <div class={iconColor[noteType]}><Icon /></div><slot />
+</div>

@@ -17,7 +17,11 @@ export default function ImageView(props: ImageViewProps) {
 
   return (
     <>
-      <img {...props} onClick={() => onPreviewImageClickHandler()} />
+      <img
+        {...props}
+        onClick={() => onPreviewImageClickHandler()}
+        className="cursor-pointer"
+      />
       <Modal visible={visible} onClose={() => onCloseHandler()}>
         <img
           src={props.src}

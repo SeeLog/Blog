@@ -1,0 +1,17 @@
+---
+import { twMerge } from 'tailwind-merge';
+
+interface Props {
+  className?: string;
+}
+
+const props = Astro.props;
+
+const cls = twMerge('table bg-base-100 w-auto', props.className);
+---
+
+<div class="overflow-x-auto">
+  <table class={cls}>
+    <slot />
+  </table>
+</div>

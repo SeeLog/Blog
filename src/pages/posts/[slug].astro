@@ -12,6 +12,8 @@ import Blockquote from '../../components/Markdown/Blockquote.astro';
 import Split from '../../components/Markdown/Split.astro';
 import Ul from '../../components/Markdown/Ul.astro';
 import ImageView from '../../components/ImageView/ImageView.astro';
+import Table from '../../components/Markdown/Table.astro';
+import Note from '../../components/Markdown/Note.astro';
 
 export async function getStaticPaths() {
   const entries = await contentfulClient.getEntries({
@@ -44,12 +46,14 @@ const post = Astro.props;
         CodeBlock,
         CodeSpan,
         Heading,
+        Note,
         p: Paragraph,
         a: Link,
         hr: Split,
         ul: Ul,
         blockquote: Blockquote,
-        img: ImageView
+        img: ImageView,
+        table: Table,
       }}
     />
   </div>
