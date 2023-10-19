@@ -1,0 +1,8 @@
+---
+import ImageViewComponent, { type ImageViewProps } from './ImageView'
+
+type Props = ImageViewProps
+const props = Astro.props;
+---
+
+<ImageViewComponent {...props} client:only />

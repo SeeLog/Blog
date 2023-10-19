@@ -11,6 +11,7 @@ import Link from '../../components/Markdown/Link.astro';
 import Blockquote from '../../components/Markdown/Blockquote.astro';
 import Split from '../../components/Markdown/Split.astro';
 import Ul from '../../components/Markdown/Ul.astro';
+import ImageView from '../../components/ImageView/ImageView.astro';
 
 export async function getStaticPaths() {
   const entries = await contentfulClient.getEntries({
@@ -21,8 +22,7 @@ export async function getStaticPaths() {
     props: {
       title: entry.fields.title,
       content: entry.fields.content,
-      date:
-        new Date(entry.fields.date?.toString() ?? '').toLocaleDateString()
+      date: new Date(entry.fields.date?.toString() ?? '').toLocaleDateString(),
     },
   }));
   return pages;
@@ -42,13 +42,14 @@ const post = Astro.props;
       content={post.content}
       components={{
         CodeBlock,
-				CodeSpan,
+        CodeSpan,
         Heading,
-				p: Paragraph,
+        p: Paragraph,
         a: Link,
         hr: Split,
         ul: Ul,
-        blockquote: Blockquote
+        blockquote: Blockquote,
+        img: ImageView
       }}
     />
   </div>
