@@ -40,6 +40,6 @@ const { page, totalPages, posts, pageContents } = Astro.props;
   </div>
   <PostList posts={pageContents} />
   <div class="flex justify-center mt-8">
-    <PageNav page={page} />
+    <PageNav currentPage={page.currentPage} lastPage={page.lastPage} hrefPrefix='/pages/' />
   </div>
 </Layout>

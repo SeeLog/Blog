@@ -5,6 +5,7 @@ import PostList from '../components/PostList.astro';
 
 const entries = await contentfulClient.getEntries<BlogPostSkeleton, string>({
   content_type: 'blogPost',
+  // @ts-ignore
   order: ['-fields.date'],
   limit: 12,
 });

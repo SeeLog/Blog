@@ -1,0 +1,72 @@
+---
+import {
+  type BlogPostSkeleton,
+  contentfulClient,
+  type BlogPost,
+  TagSkeleton,
+} from '../../../lib/contentful';
+import { GetStaticPathsOptions, Page } from 'astro';
+import Layout from '../../../components/Layout.astro';
+import PostList from '../../../components/PostList.astro';
+import PageNav from '../../../components/PageNav.astro';
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+  const tags = await contentfulClient.getEntries<TagSkeleton>({
+    content_type: 'blogTag',
+  });
+  const entries = await contentfulClient.getEntries<BlogPostSkeleton>({
+    content_type: 'blogPost',
+    // @ts-ignore
+    order: '-fields.date',
+  });
+
+  return tags.items.flatMap((tag) => {
+    const filteredEntries = entries.items.filter((entry) => {
+      return (entry.fields as BlogPost).tags.some(
+        (entryTag) => entryTag.fields.slug === tag.fields.slug,
+      );
+    });
+    const paths = paginate(filteredEntries, {
+      params: {
+        tag: tag.fields.slug,
+      },
+      pageSize: 2,
+    });
+
+    return paths.flatMap((page, i) => {
+      return {
+        params: {
+          tag: tag.fields.slug,
+          page: String(i + 1),
+        },
+        props: {
+          ...page.props,
+          tag,
+          pageContents: page.props.page.data.map((post) => ({
+            ...post.fields,
+          })),
+        },
+      };
+    });
+  });
+}
+
+type Props = {
+  page: Page<BlogPostSkeleton>;
+  pageContents: BlogPost[];
+  tag: TagSkeleton;
+};
+
+const { page, pageContents, tag } = Astro.props;
+const params = Astro.params;
+---
+
+<Layout>
+  <div class="py-12">
+    <h1 class="text-center text-4xl">{tag.fields.title}</h1>
+  </div>
+  <PostList posts={pageContents}  />
+  <div class="flex justify-center mt-8">
+    <PageNav currentPage={page.currentPage} lastPage={page.lastPage} hrefPrefix={`/tags/${tag.fields.slug}/`} />
+  </div>
+</Layout>

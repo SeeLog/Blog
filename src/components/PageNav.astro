@@ -3,20 +3,20 @@ import type { Page } from 'astro';
 import { getPaginationItemList } from '../utils/pagination.ts';
 
 interface Props {
-  page: Page;
+  currentPage: number;
+  lastPage: number;
+  hrefPrefix: string;
 }
 
-const { page } = Astro.props;
-const currentPage = page.currentPage;
-const totalPages = page.lastPage;
+const { currentPage, lastPage, hrefPrefix } = Astro.props;
 const prev = currentPage > 1 ? currentPage - 1 : null;
-const next = currentPage < totalPages ? currentPage + 1 : null;
-const pageTextList = getPaginationItemList(currentPage, totalPages);
+const next = currentPage < lastPage ? currentPage + 1 : null;
+const pageTextList = getPaginationItemList(currentPage, lastPage);
 ---
 
 <div class="join">
   {
-    prev && (<a class="join-item btn" href={`/pages/${prev}`}>&lt;</a>)
+    prev && (<a class="join-item btn" href={`${hrefPrefix}${prev}`}>&lt;</a>)
   }
   {
     !prev && (<span class="join-item btn btn-disabled">&lt;</span>)
@@ -29,7 +29,7 @@ const pageTextList = getPaginationItemList(currentPage, totalPages);
         return <div class="join-item bg-base-200 px-4 py-2">{pageText}</div>;
       } else {
         return (
-          <a class="join-item btn" href={`/pages/${pageText}`}>
+          <a class="join-item btn" href={`${hrefPrefix}${pageText}`}>
             {pageText}
           </a>
         );
@@ -37,7 +37,7 @@ const pageTextList = getPaginationItemList(currentPage, totalPages);
     })
   }
   {
-    next && (<a class="join-item btn" href={`/pages/${next}`}>&gt;</a>)
+    next && (<a class="join-item btn" href={`${hrefPrefix}${next}`}>&gt;</a>)
   }
   {
     !next && (<span class="join-item btn btn-disabled">&gt;</span>)

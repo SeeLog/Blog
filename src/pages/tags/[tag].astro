@@ -1,0 +1,69 @@
+---
+import {
+  type BlogPostSkeleton,
+  contentfulClient,
+  type BlogPost,
+  TagSkeleton,
+} from '../../lib/contentful';
+import Layout from '../../components/Layout.astro';
+import PostList from '../../components/PostList.astro';
+import PageNav from '../../components/PageNav.astro';
+
+export async function getStaticPaths() {
+  const tags = await contentfulClient.getEntries<TagSkeleton>({
+    content_type: 'blogTag',
+  });
+  const entries = await contentfulClient.getEntries<BlogPostSkeleton>({
+    content_type: 'blogPost',
+    // @ts-ignore
+    order: '-fields.date',
+  });
+
+  return tags.items.flatMap((tag) => {
+    const filterd = entries.items.filter((entry) => {
+      return (entry.fields as BlogPost).tags?.some(
+        (entryTag) => entryTag.fields.slug === tag.fields.slug,
+      );
+    });
+
+    const sliced = filterd.slice(0, Math.min(filterd.length, 2));
+
+    return sliced.map((entry) => {
+      return {
+        params: {
+          tag: tag.fields.slug,
+        },
+        props: {
+          posts: sliced,
+          pageContents: sliced.map((entry) => entry.fields),
+          tag,
+          lastPage: Math.ceil(filterd.length / 2),
+        }
+      };
+    });
+  });
+}
+
+type Props = {
+  posts: BlogPostSkeleton[];
+  pageContents: BlogPost[];
+  tag: TagSkeleton;
+  lastPage: number;
+};
+
+const { posts, pageContents, tag, lastPage } = Astro.props;
+---
+
+<Layout>
+  <div class="py-12">
+    <h1 class="text-center text-4xl">{tag.fields.title}</h1>
+  </div>
+  <PostList posts={pageContents} />
+  <div class="flex justify-center mt-8">
+    <PageNav
+      currentPage={1}
+      lastPage={lastPage}
+      hrefPrefix={`/tags/${tag.fields.slug}/`}
+    />
+  </div>
+</Layout>
