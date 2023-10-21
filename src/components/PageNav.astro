@@ -1,0 +1,45 @@
+---
+import type { Page } from 'astro';
+import { getPaginationItemList } from '../utils/pagination.ts';
+
+interface Props {
+  page: Page;
+}
+
+const { page } = Astro.props;
+const currentPage = page.currentPage;
+const totalPages = page.lastPage;
+const prev = currentPage > 1 ? currentPage - 1 : null;
+const next = currentPage < totalPages ? currentPage + 1 : null;
+const pageTextList = getPaginationItemList(currentPage, totalPages);
+---
+
+<div class="join">
+  {
+    prev && (<a class="join-item btn" href={`/pages/${prev}`}>&lt;</a>)
+  }
+  {
+    !prev && (<span class="join-item btn btn-disabled">&lt;</span>)
+  }
+  {
+    pageTextList.map((pageText) => {
+      if (pageText === currentPage.toString()) {
+        return <span class="join-item btn btn-neutral no-animation">{pageText}</span>;
+      } else if (pageText === '...') {
+        return <div class="join-item bg-base-200 px-4 py-2">{pageText}</div>;
+      } else {
+        return (
+          <a class="join-item btn" href={`/pages/${pageText}`}>
+            {pageText}
+          </a>
+        );
+      }
+    })
+  }
+  {
+    next && (<a class="join-item btn" href={`/pages/${next}`}>&gt;</a>)
+  }
+  {
+    !next && (<span class="join-item btn btn-disabled">&gt;</span>)
+  }
+</div>

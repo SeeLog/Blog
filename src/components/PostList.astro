@@ -1,6 +1,5 @@
 ---
 import type { BlogPost } from '../lib/contentful';
-import ContentContainer from './ContentContainer.astro';
 
 interface Props {
   posts: BlogPost[];
@@ -15,7 +14,7 @@ const props = Astro.props;
       props.posts.map((post) => {
         return (
           <a href={`/posts/${post.slug}`}>
-            <div class="bg-base-200 px-8 py-4 rounded-xl">
+            <div class="bg-base-200 px-8 py-4 rounded-xl hover:bg-base-200/50 hover:outline hover:outline-accent">
               <div class="mb-4 border-b border-primary">
                 <span>{post.title}</span>
               </div>
@@ -26,7 +25,7 @@ const props = Astro.props;
               />
               <div class="pt-4">{post.description}</div>
               <div class="text-right">
-                <span>{new Date(post.date).toLocaleDateString()}</span>
+                <span>{new Date(String(post.date)).toLocaleDateString()}</span>
               </div>
             </div>
           </a>

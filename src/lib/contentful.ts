@@ -1,4 +1,8 @@
-import contentful, { type Asset } from 'contentful';
+import contentful, {
+  type Asset,
+  type EntryFieldTypes,
+  type EntrySkeletonType,
+} from 'contentful';
 
 export interface BlogPost {
   title: string;
@@ -27,20 +31,9 @@ export interface Tag {
   parentCategory: string;
 }
 
-export interface BlogPostSkeleton {
-  contentTypeId: string;
-  fields: BlogPost;
-}
-
-export interface CategorySkeleton {
-  contentTypeId: string;
-  fields: Category;
-}
-
-export interface TagSkeleton {
-  contentTypeId: string;
-  fields: Tag;
-}
+export type BlogPostSkeleton = EntrySkeletonType<BlogPost>;
+export type CategorySkeleton = EntrySkeletonType<Category>;
+export type TagSkeleton = EntrySkeletonType<Tag>;
 
 export const contentfulClient = contentful.createClient({
   space: import.meta.env.CONTENTFUL_SPACE_ID,

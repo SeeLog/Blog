@@ -1,14 +1,12 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import { type BlogPostSkeleton, contentfulClient } from '../lib/contentful';
 import Layout from '../components/Layout.astro';
 import PostList from '../components/PostList.astro';
 
 const entries = await contentfulClient.getEntries<BlogPostSkeleton, string>({
   content_type: 'blogPost',
+  order: ['-fields.date'],
+  limit: 12,
 });
 const posts = entries.items.map((item) => {
   return item.fields;

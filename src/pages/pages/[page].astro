@@ -1,0 +1,45 @@
+---
+import { type BlogPostSkeleton, contentfulClient, type BlogPost } from '../../lib/contentful';
+import Layout from '../../components/Layout.astro';
+import PostList from '../../components/PostList.astro';
+import type { GetStaticPathsOptions, Page } from 'astro';
+import PageNav from '../../components/PageNav.astro';
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+  const entries = await contentfulClient.getEntries<BlogPostSkeleton>({
+    content_type: 'blogPost',
+    // @ts-ignore
+    order: '-fields.date',
+  });
+  const paths = paginate(entries.items, { pageSize: 12 });
+  return paths.map((page, i) => ({
+    params: {
+      page: String(i + 1),
+    },
+    props: {
+      ...page.props,
+      pageContents: page.props.page.data.map((post) => ({
+        ...post.fields
+      })),
+    }
+  }));
+}
+type Props = {
+  page: Page<BlogPostSkeleton>;
+  totalPages: number;
+  posts: Page<BlogPostSkeleton>;
+  pageContents: BlogPost[];
+};
+
+const { page, totalPages, posts, pageContents } = Astro.props;
+---
+
+<Layout>
+  <div class="py-12">
+    <h1 class="text-center text-4xl">記事一覧</h1>
+  </div>
+  <PostList posts={pageContents} />
+  <div class="flex justify-center mt-8">
+    <PageNav page={page} />
+  </div>
+</Layout>
