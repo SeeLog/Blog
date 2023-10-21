@@ -30,7 +30,7 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
       params: {
         tag: tag.fields.slug,
       },
-      pageSize: 2,
+      pageSize: 12,
     });
 
     return paths.flatMap((page, i) => {
