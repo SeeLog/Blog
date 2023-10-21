@@ -2,14 +2,17 @@
 import { type BlogPostSkeleton, contentfulClient } from '../lib/contentful';
 import Layout from '../components/Layout.astro';
 import PostList from '../components/PostList.astro';
+import PageNav from '../components/PageNav.astro';
 
 const entries = await contentfulClient.getEntries<BlogPostSkeleton, string>({
   content_type: 'blogPost',
   // @ts-ignore
   order: ['-fields.date'],
-  limit: 12,
 });
-const posts = entries.items.map((item) => {
+const perPage = 12;
+const limited = entries.items.slice(0, perPage);
+const lastPage = Math.ceil(entries.total / perPage);
+const posts = limited.map((item) => {
   return item.fields;
 });
 ---
@@ -19,4 +22,7 @@ const posts = entries.items.map((item) => {
     <h1 class="text-center text-4xl">記事一覧</h1>
   </div>
   <PostList posts={posts} />
+  <div class="flex justify-center mt-8">
+    <PageNav currentPage={1} lastPage={lastPage} hrefPrefix="/pages/" />
+  </div>
 </Layout>
