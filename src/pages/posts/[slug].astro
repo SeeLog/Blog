@@ -20,6 +20,7 @@ import Tag from '../../components/Tag.astro';
 import ContentContainer from '../../components/ContentContainer.astro';
 import Ol from '../../components/Markdown/Ol.astro';
 import CategoryList from '../../components/CategoryList.astro';
+import Outline from '../../components/Markdown/Outline.astro';
 
 export async function getStaticPaths() {
   const entries = await contentfulClient.getEntries({
@@ -79,6 +80,9 @@ const post = Astro.props;
         />
       </ContentContainer>
     </Main>
-    <CategoryList />
+    <div class="w-full max-w-4xl xl:w-auto xl:max-w-none space-y-4">
+      <Outline content={post.content} />
+      <CategoryList />
+    </div>
   </ContentWrapper>
 </Layout>

@@ -20,8 +20,9 @@ const cls = twMerge(
     'text-base my-1': Component === 'h6',
   }),
 );
+const id = href.replace('#', '');
 ---
 
-<Component class={cls} {...props}>
+<Component class={cls} id={id} {...props}>
   <a href={href}><slot /></a>
 </Component>

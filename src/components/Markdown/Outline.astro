@@ -1,0 +1,42 @@
+---
+type Props = {
+  content: string;
+};
+
+interface OutlineItem {
+  level: number;
+  title: string;
+}
+
+const outlineArray = [];
+const regex = /^(#+)\s+(.*)$/gm;
+// h1
+let largestHeader = 1;
+
+for (const line of Astro.props.content.split('\n')) {
+  const match = regex.exec(line);
+  if (match) {
+    const level = match[1].length;
+    const title = match[2];
+    outlineArray.push({ level, title });
+    largestHeader = Math.min(largestHeader, level);
+  }
+}
+
+const outline = outlineArray.filter((item) => item.level == largestHeader);
+---
+
+<div class="hidden xl:block xl:sticky xl:top-4">
+  <!-- <ul class="bg-base-200 h-fit p-4  ml-4 w-60 rounded-xl"> -->
+  <ul class="menu bg-base-200 ml-4 w-60 rounded-xl">
+    {
+      outline.map((item: OutlineItem) => (
+        <li>
+          <a href={`#${item.title.toLowerCase().replace(/\s/g, '-')}`}>
+            {item.title}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</div>
