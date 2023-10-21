@@ -27,8 +27,8 @@ const outline = outlineArray.filter((item) => item.level == largestHeader);
 ---
 
 <div class="hidden xl:block xl:sticky xl:top-4">
-  <!-- <ul class="bg-base-200 h-fit p-4  ml-4 w-60 rounded-xl"> -->
   <ul class="menu bg-base-200 ml-4 w-60 rounded-xl">
+    <span class="text-center text-xl">目次</span>
     {
       outline.map((item: OutlineItem) => (
         <li>
