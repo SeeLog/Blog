@@ -1,7 +1,13 @@
 ---
+type Props = {
+  href?: string
+}
 
+const { href } = Astro.props as Props;
+
+const Container = href ? 'a' : 'div';
 ---
 
-<div class="badge badge-neutral px-3 py-3">
+<Container class="badge badge-neutral px-3 py-3" href={href}>
   #<slot />
-</div>
+</Container>
