@@ -9,10 +9,10 @@ const props = Astro.props;
 
 const cls = twMerge(
   props.className,
-  '__md-ul',
+  '__md-ol',
 )
 ---
 
-<ul class={cls}>
+<ol class={cls}>
   <slot />
-</ul>
+</ol>

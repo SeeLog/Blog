@@ -4,28 +4,28 @@
   License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
  */
 
-ul {
+ul.__md-ul {
   list-style-type: disc !important;
   padding-left: 2em !important;
 }
 
-ul > li > ul {
+ul.__md-ul > li > ul {
   list-style-type: circle !important;
 }
 
-ul > li > ul > li > ul {
+ul.__md-ul > li > ul > li > ul {
   list-style-type: square !important;
 }
 
-ol {
+ol.__md-ol {
   list-style-type: decimal !important;
   padding-left: 2em !important;
 }
 
-ol > li > ol {
+ol.__md-ol > li > ol {
   list-style-type: upper-roman !important;
 }
 
-ol > li > ol > li > ol {
+ol.__md-ol > li > ol > li > ol {
   list-style-type: lower-alpha !important;
 }
