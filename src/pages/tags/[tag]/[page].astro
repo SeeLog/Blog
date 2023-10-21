@@ -7,8 +7,11 @@ import {
 } from '../../../lib/contentful';
 import { GetStaticPathsOptions, Page } from 'astro';
 import Layout from '../../../components/Layout.astro';
+import Main from '../../../components/Main.astro';
 import PostList from '../../../components/PostList.astro';
 import PageNav from '../../../components/PageNav.astro';
+import ContentWrapper from '../../../components/ContentWrapper.astro';
+import CategoryList from '../../../components/CategoryList.astro';
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   const tags = await contentfulClient.getEntries<TagSkeleton>({
@@ -65,8 +68,21 @@ const params = Astro.params;
   <div class="py-12">
     <h1 class="text-center text-4xl">{tag.fields.title}</h1>
   </div>
-  <PostList posts={pageContents}  />
-  <div class="flex justify-center mt-8">
-    <PageNav currentPage={page.currentPage} lastPage={page.lastPage} hrefPrefix={`/tags/${tag.fields.slug}/`} />
-  </div>
+  <ContentWrapper>
+    <Main>
+      <div
+        class="p-4 rounded-xl shadow-[0px_0px_8px_2px_rgba(0,0,0,0.15)] dark:shadow-[0px_0px_8px_2px_rgba(255,255,255,0.15)]"
+      >
+        <PostList posts={pageContents} />
+        <div class="flex justify-center mt-8">
+          <PageNav
+            currentPage={page.currentPage}
+            lastPage={page.lastPage}
+            hrefPrefix={`/tags/${tag.fields.slug}/`}
+          />
+        </div>
+      </div>
+    </Main>
+    <CategoryList />
+  </ContentWrapper>
 </Layout>

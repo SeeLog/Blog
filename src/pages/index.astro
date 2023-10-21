@@ -1,8 +1,11 @@
 ---
 import { type BlogPostSkeleton, contentfulClient } from '../lib/contentful';
 import Layout from '../components/Layout.astro';
+import Main from '../components/Main.astro';
 import PostList from '../components/PostList.astro';
 import PageNav from '../components/PageNav.astro';
+import CategoryList from '../components/CategoryList.astro';
+import ContentWrapper from '../components/ContentWrapper.astro';
 
 const entries = await contentfulClient.getEntries<BlogPostSkeleton, string>({
   content_type: 'blogPost',
@@ -21,8 +24,15 @@ const posts = limited.map((item) => {
   <div class="py-12">
     <h1 class="text-center text-4xl">記事一覧</h1>
   </div>
-  <PostList posts={posts} />
-  <div class="flex justify-center mt-8">
-    <PageNav currentPage={1} lastPage={lastPage} hrefPrefix="/pages/" />
-  </div>
+  <ContentWrapper>
+    <Main>
+      <div class="p-4 rounded-xl shadow-[0px_0px_8px_2px_rgba(0,0,0,0.15)] dark:shadow-[0px_0px_8px_2px_rgba(255,255,255,0.15)]">
+        <PostList posts={posts} />
+        <div class="flex justify-center mt-8">
+          <PageNav currentPage={1} lastPage={lastPage} hrefPrefix="/pages/" />
+        </div>
+      </div>
+    </Main>
+    <CategoryList />
+  </ContentWrapper>
 </Layout>

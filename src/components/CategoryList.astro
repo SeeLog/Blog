@@ -1,0 +1,52 @@
+---
+import {
+  CategorySkeleton,
+  TagSkeleton,
+  contentfulClient,
+} from '../lib/contentful';
+import Tag from './Tag.astro';
+
+const tags = await contentfulClient.getEntries<TagSkeleton>({
+  content_type: 'blogTag',
+});
+const categories = await contentfulClient.getEntries<TagSkeleton>({
+  content_type: 'blogCategory',
+  // @ts-ignore
+  order: 'fields.sort',
+});
+
+const menuItems = categories.items.map((category) => ({
+  category,
+  tags: tags.items
+    .filter(
+      (tag) =>
+        (tag.fields.parentCategory as CategorySkeleton).fields.slug ===
+        category.fields.slug,
+    )
+    .map((tag) => ({
+      title: tag.fields.title,
+      slug: tag.fields.slug,
+    })),
+}));
+---
+
+<div class="w-full max-w-4xl xl:w-auto xl:max-w-none">
+  <div
+    class="flex flex-col gap-4 bg-base-200 h-fit p-4 mt-8 xl:mt-0 xl:ml-4 xl:w-60 rounded-xl"
+  >
+    {
+      menuItems.map((item) => (
+        <ul class="">
+          <li>{item.category.fields.title}</li>
+          <ul class="flex gap-2">
+            {item.tags.map((tag) => (
+              <li>
+                <Tag href={`/tags/${tag.slug}`}>{tag.title}</Tag>
+              </li>
+            ))}
+          </ul>
+        </ul>
+      ))
+    }
+  </div>
+</div>

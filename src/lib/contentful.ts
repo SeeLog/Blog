@@ -28,7 +28,7 @@ export interface Tag {
   image: string;
   title: string;
   slug: string;
-  parentCategory: string;
+  parentCategory: CategorySkeleton;
 }
 
 export type BlogPostSkeleton = EntrySkeletonType<BlogPost>;

@@ -6,6 +6,8 @@ import CodeBlock from '../../components/Markdown/CodeBlock.astro';
 import CodeSpan from '../../components/Markdown/CodeSpan.astro';
 import Heading from '../../components/Markdown/Heading.astro';
 import Layout from '../../components/Layout.astro';
+import Main from '../../components/Main.astro';
+import ContentWrapper from '../../components/ContentWrapper.astro';
 import Paragraph from '../../components/Markdown/Paragraph.astro';
 import Link from '../../components/Markdown/Link.astro';
 import Blockquote from '../../components/Markdown/Blockquote.astro';
@@ -17,6 +19,7 @@ import Note from '../../components/Markdown/Note.astro';
 import Tag from '../../components/Tag.astro';
 import ContentContainer from '../../components/ContentContainer.astro';
 import Ol from '../../components/Markdown/Ol.astro';
+import CategoryList from '../../components/CategoryList.astro';
 
 export async function getStaticPaths() {
   const entries = await contentfulClient.getEntries({
@@ -54,23 +57,28 @@ const post = Astro.props;
       )
     }
   </div>
-  <ContentContainer>
-    <Markdown
-      content={post.content}
-      components={{
-        CodeBlock,
-        CodeSpan,
-        Heading,
-        Note,
-        p: Paragraph,
-        a: Link,
-        hr: Split,
-        ul: Ul,
-        ol: Ol,
-        blockquote: Blockquote,
-        img: ImageView,
-        table: Table,
-      }}
-    />
-  </ContentContainer>
+  <ContentWrapper>
+    <Main>
+      <ContentContainer>
+        <Markdown
+          content={post.content}
+          components={{
+            CodeBlock,
+            CodeSpan,
+            Heading,
+            Note,
+            p: Paragraph,
+            a: Link,
+            hr: Split,
+            ul: Ul,
+            ol: Ol,
+            blockquote: Blockquote,
+            img: ImageView,
+            table: Table,
+          }}
+        />
+      </ContentContainer>
+    </Main>
+    <CategoryList />
+  </ContentWrapper>
 </Layout>
