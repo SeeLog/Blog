@@ -16,6 +16,7 @@ import Table from '../../components/Markdown/Table.astro';
 import Note from '../../components/Markdown/Note.astro';
 import Tag from '../../components/Tag.astro';
 import ContentContainer from '../../components/ContentContainer.astro';
+import Ol from '../../components/Markdown/Ol.astro';
 
 export async function getStaticPaths() {
   const entries = await contentfulClient.getEntries({
@@ -65,6 +66,7 @@ const post = Astro.props;
         a: Link,
         hr: Split,
         ul: Ul,
+        ol: Ol,
         blockquote: Blockquote,
         img: ImageView,
         table: Table,
