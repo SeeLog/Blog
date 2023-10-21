@@ -1,7 +1,8 @@
-import contentful from 'contentful';
+import contentful, { type Asset } from 'contentful';
 
 export interface BlogPost {
   title: string;
+  image: Asset;
   category: CategorySkeleton;
   tags: TagSkeleton[];
   slug: string;

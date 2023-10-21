@@ -1,0 +1,37 @@
+---
+import type { BlogPost } from '../lib/contentful';
+import ContentContainer from './ContentContainer.astro';
+
+interface Props {
+  posts: BlogPost[];
+}
+
+const props = Astro.props;
+---
+
+<div class="">
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full">
+    {
+      props.posts.map((post) => {
+        return (
+          <a href={`/posts/${post.slug}`}>
+            <div class="bg-base-200 px-8 py-4 rounded-xl">
+              <div class="mb-4 border-b border-primary">
+                <span>{post.title}</span>
+              </div>
+              <img
+                src={String(post.image.fields.file?.url ?? '')}
+                alt={String(post.image.fields.description ?? '')}
+                class="aspect-square"
+              />
+              <div class="pt-4">{post.description}</div>
+              <div class="text-right">
+                <span>{new Date(post.date).toLocaleDateString()}</span>
+              </div>
+            </div>
+          </a>
+        );
+      })
+    }
+  </div>
+</div>

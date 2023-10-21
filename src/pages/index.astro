@@ -5,31 +5,19 @@ import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import { type BlogPostSkeleton, contentfulClient } from '../lib/contentful';
 import Layout from '../components/Layout.astro';
+import PostList from '../components/PostList.astro';
 
 const entries = await contentfulClient.getEntries<BlogPostSkeleton, string>({
   content_type: 'blogPost',
 });
 const posts = entries.items.map((item) => {
-  const { title, date, description, slug } = item.fields;
-  return {
-    title,
-    date: new Date(date).toLocaleDateString(),
-    description,
-    slug,
-  };
+  return item.fields;
 });
 ---
 
 <Layout>
-  <ul>
-    {
-      posts.map((post) => (
-        <li>
-          <a href={
-            `/posts/${post.slug}`
-          }>{post.title}</a>
-        </li>
-      ))
-    }
-  </ul>
+  <div class="py-12">
+    <h1 class="text-center text-4xl">記事一覧</h1>
+  </div>
+  <PostList posts={posts} />
 </Layout>

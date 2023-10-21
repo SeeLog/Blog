@@ -14,6 +14,8 @@ import Ul from '../../components/Markdown/Ul.astro';
 import ImageView from '../../components/ImageView/ImageView.astro';
 import Table from '../../components/Markdown/Table.astro';
 import Note from '../../components/Markdown/Note.astro';
+import Tag from '../../components/Tag.astro';
+import ContentContainer from '../../components/ContentContainer.astro';
 
 export async function getStaticPaths() {
   const entries = await contentfulClient.getEntries({
@@ -41,15 +43,17 @@ const post = Astro.props;
   <div class="py-12">
     <h1 class="text-center text-4xl">{post.title}</h1>
     <p class="text-center">{post.date}</p>
-    {post.tags && (
-      <div class="flex justify-center space-x-2">
-        {post.tags.map((tag) => (
-          <span class="text-sm text-gray-500">{tag.fields.title}</span>
-        ))}
-      </div>
-    )}
+    {
+      post.tags && (
+        <div class="flex justify-center gap-x-2 flex-wrap mt-6">
+          {post.tags.map((tag) => (
+            <Tag>{tag.fields.title}</Tag>
+          ))}
+        </div>
+      )
+    }
   </div>
-  <div class="bg-base-200 px-4 lg:px-8 py-2 lg:py-4 rounded-xl">
+  <ContentContainer>
     <Markdown
       content={post.content}
       components={{
@@ -66,5 +70,5 @@ const post = Astro.props;
         table: Table,
       }}
     />
-  </div>
+  </ContentContainer>
 </Layout>
