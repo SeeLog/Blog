@@ -12,14 +12,21 @@ const shouldShowChildren = item.children.length > 0 && level < maxLevel;
 ---
 
 <li>
-  <a href={`#${item.href}`}>
+  <a
+    href={`#${item.href}`}
+    class={level === 1
+      ? 'before:content-[">"] before:text-base-content/20 before:ml-[-4px]'
+      : ''}
+  >
     {item.title}
   </a>
-  {item.children.length > 0 && shouldShowChildren && (
-    <ul>
-      {item.children.map((subItem) => (
-        <Astro.self item={subItem} level={level + 1} maxLevel={maxLevel} />
-      ))}
-    </ul>
-  )}
+  {
+    item.children.length > 0 && shouldShowChildren && (
+      <ul>
+        {item.children.map((subItem) => (
+          <Astro.self item={subItem} level={level + 1} maxLevel={maxLevel} />
+        ))}
+      </ul>
+    )
+  }
 </li>

@@ -12,10 +12,10 @@ const { as: Component, href, ...props } = Astro.props;
 
 const cls = twMerge(
   clsx({
-    'text-4xl border-b-2 border-accent mb-4 pb-1 my-6': Component === 'h1',
-    'text-3xl border-b-2 border-accent mb-3 pb-1 my-5': Component === 'h2',
-    'text-2xl border-b border-accent mb-2 pb-1 my-4': Component === 'h3',
-    'text-xl  border-b border-accent mb-1 pb-1 my-3': Component === 'h4',
+    'text-4xl border-b-2 border-accent/50 mt-12 mb-4 pb-1 first:mt-4': Component === 'h1',
+    'text-3xl border-b-2 border-accent/50 mt-12 mb-4 pb-1 first:mt-4': Component === 'h2',
+    'text-2xl border-b border-accent/50 mt-10 mb-3 pb-1': Component === 'h3',
+    'text-xl  border-b border-accent/50 mt-10 mb-3 pb-1': Component === 'h4',
     'text-lg my-2': Component === 'h5',
     'text-base my-1': Component === 'h6',
   }),
