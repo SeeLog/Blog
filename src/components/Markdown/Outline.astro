@@ -21,8 +21,8 @@ export interface SubItemOutlineItem {
 const outlineArray = [];
 const regex = /^(#+)\s+(.+)$/g;
 const usedIds: { [key: string]: number } = {};
-// h1
-let largestHeader = 1;
+// h6
+let largestHeader = 6;
 
 for (const line of Astro.props.content.split('\n')) {
   const match = regex.exec(line);
