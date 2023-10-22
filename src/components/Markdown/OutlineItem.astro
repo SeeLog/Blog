@@ -1,0 +1,22 @@
+---
+import { SubItemOutlineItem } from './Outline.astro';
+
+type Props = {
+  item: SubItemOutlineItem;
+};
+
+const { item } = Astro.props;
+---
+
+<li>
+  <a href={`#${item.href}`}>
+    {item.title}
+  </a>
+  {item.children.length > 0 && (
+    <ul>
+      {item.children.map((subItem) => (
+        <Astro.self item={subItem} />
+      ))}
+    </ul>
+  )}
+</li>

@@ -28,11 +28,21 @@ const menuItems = categories.items.map((category) => ({
       slug: tag.fields.slug,
     })),
 }));
+
+type Props = {
+  forceBottom?: boolean;
+};
+
+const { forceBottom = false } = Astro.props;
+const bottomOuterCls = 'w-full max-w-4xl';
+const normalOuterCls = 'w-full max-w-4xl xl:w-auto xl:max-w-none';
+const bottomInnerCls = 'flex flex-col gap-4 bg-base-200 h-fit p-4 mt-8 rounded-xl';
+const normalInnerCls = 'flex flex-col gap-4 bg-base-200 h-fit p-4 mt-8 xl:mt-0 xl:ml-4 xl:w-60 2xl:w-80 rounded-xl';
 ---
 
-<div class="w-full max-w-4xl xl:w-auto xl:max-w-none">
+<div class={forceBottom ? bottomOuterCls : normalOuterCls}>
   <div
-    class="flex flex-col gap-4 bg-base-200 h-fit p-4 mt-8 xl:mt-0 xl:ml-4 xl:w-60 rounded-xl"
+    class={forceBottom ? bottomInnerCls : normalInnerCls}
   >
     <span class="text-xl text-center">カテゴリー</span>
     {

@@ -45,7 +45,11 @@ type Props = BlogPost;
 const post = Astro.props;
 ---
 
-<Layout title={post.title} description={post.description} image={post.image.fields.file?.url?.toString()}>
+<Layout
+  title={post.title}
+  description={post.description}
+  image={post.image.fields.file?.url?.toString()}
+>
   <div class="py-12">
     <h1 class="text-center text-4xl">{post.title}</h1>
     <p class="text-center">{post.date}</p>
@@ -80,10 +84,10 @@ const post = Astro.props;
           }}
         />
       </ContentContainer>
+      <CategoryList forceBottom />
     </Main>
     <div class="w-full max-w-4xl xl:w-auto xl:max-w-none space-y-4">
       <Outline content={post.content} />
-      <CategoryList />
     </div>
   </ContentWrapper>
 </Layout>

@@ -1,4 +1,6 @@
 ---
+import OutlineItem from './OutlineItem.astro';
+
 type Props = {
   content: string;
 };
@@ -6,37 +8,68 @@ type Props = {
 interface OutlineItem {
   level: number;
   title: string;
+  href: string;
+}
+
+export interface SubItemOutlineItem {
+  level: number;
+  title: string;
+  href: string;
+  children: SubItemOutlineItem[];
 }
 
 const outlineArray = [];
-const regex = /^(#+)\s+(.*)$/gm;
+const regex = /^(#+)\s+(.+)$/g;
+const usedIds: { [key: string]: number } = {};
 // h1
 let largestHeader = 1;
 
 for (const line of Astro.props.content.split('\n')) {
   const match = regex.exec(line);
+  regex.lastIndex = 0;
   if (match) {
     const level = match[1].length;
     const title = match[2];
-    outlineArray.push({ level, title });
+    const id = title.toLowerCase().replace(/ /g, '-');
+    if (usedIds[id]) {
+      usedIds[id]++;
+    } else {
+      usedIds[id] = 1;
+    }
+    const href = usedIds[id] > 1 ? `${id}-${usedIds[id] - 1}` : id;
+    outlineArray.push({ level, title, href });
     largestHeader = Math.min(largestHeader, level);
   }
 }
 
-const outline = outlineArray.filter((item) => item.level == largestHeader);
+const outline: SubItemOutlineItem[] = [];
+const stack: SubItemOutlineItem[] = [];
+
+for (const item of outlineArray) {
+  if (item.level === largestHeader) {
+    // トップレベルならそのまま outline へ追加し、スタックにも積む
+    outline.push({ ...item, children: [] });
+    stack.push(outline[outline.length - 1]);
+  } else {
+    // トップレベルでないなら、スタックの最新よりも
+    // 今のアイテムのレベルが小さいレベルになるまでスタックから取り出す
+    while (stack[stack.length - 1].level >= item.level) {
+      stack.pop();
+    }
+    // スタックのトップレベルの子要素として追加し、スタックにも積む
+    stack[stack.length - 1].children.push({ ...item, children: [] });
+    stack.push(
+      stack[stack.length - 1].children[
+        stack[stack.length - 1].children.length - 1
+      ],
+    );
+  }
+}
 ---
 
 <div class="hidden xl:block xl:sticky xl:top-4">
-  <ul class="menu bg-base-200 ml-4 w-60 rounded-xl">
+  <ul class="menu bg-base-200 ml-4 w-60 rounded-xl 2xl:w-80">
     <span class="text-center text-xl">目次</span>
-    {
-      outline.map((item: OutlineItem) => (
-        <li>
-          <a href={`#${item.title.toLowerCase().replace(/\s/g, '-')}`}>
-            {item.title}
-          </a>
-        </li>
-      ))
-    }
+    {outline.map((item: SubItemOutlineItem) => <OutlineItem item={item} />)}
   </ul>
 </div>
