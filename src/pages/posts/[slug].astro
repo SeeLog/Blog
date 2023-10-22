@@ -34,6 +34,7 @@ export async function getStaticPaths() {
       date: new Date(entry.fields.date?.toString() ?? '').toLocaleDateString(),
       tags: entry.fields.tags,
       category: entry.fields.category,
+      image: entry.fields.image,
       description: entry.fields.description,
     },
   }));
@@ -44,7 +45,7 @@ type Props = BlogPost;
 const post = Astro.props;
 ---
 
-<Layout>
+<Layout title={post.title} description={post.description} image={post.image.fields.file?.url?.toString()}>
   <div class="py-12">
     <h1 class="text-center text-4xl">{post.title}</h1>
     <p class="text-center">{post.date}</p>
