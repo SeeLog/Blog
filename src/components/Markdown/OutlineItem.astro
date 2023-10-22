@@ -3,19 +3,22 @@ import { SubItemOutlineItem } from './Outline.astro';
 
 type Props = {
   item: SubItemOutlineItem;
+  level?: number;
+  maxLevel?: number;
 };
 
-const { item } = Astro.props;
+const { item, level = 1, maxLevel = 2 } = Astro.props;
+const shouldShowChildren = item.children.length > 0 && level < maxLevel;
 ---
 
 <li>
   <a href={`#${item.href}`}>
     {item.title}
   </a>
-  {item.children.length > 0 && (
+  {item.children.length > 0 && shouldShowChildren && (
     <ul>
       {item.children.map((subItem) => (
-        <Astro.self item={subItem} />
+        <Astro.self item={subItem} level={level + 1} maxLevel={maxLevel} />
       ))}
     </ul>
   )}
