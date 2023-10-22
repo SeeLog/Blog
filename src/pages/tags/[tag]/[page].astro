@@ -64,7 +64,7 @@ const { page, pageContents, tag } = Astro.props;
 const params = Astro.params;
 ---
 
-<Layout>
+<Layout title={tag.fields.title}>
   <div class="py-12">
     <h1 class="text-center text-4xl">{tag.fields.title}</h1>
   </div>
