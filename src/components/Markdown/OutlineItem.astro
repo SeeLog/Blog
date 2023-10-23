@@ -11,7 +11,11 @@ const { item, level = 1, maxLevel = 2 } = Astro.props;
 const shouldShowChildren = item.children.length > 0 && level < maxLevel;
 ---
 
-<li>
+<li
+  class="text-base-content/50"
+  data-menu-href={item.href}
+  data-scrollspy-group={level === 1 ? true : undefined}
+>
   <a
     href={`#${item.href}`}
     class={level === 1

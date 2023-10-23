@@ -18,7 +18,9 @@ const { title, description, image } = Astro.props;
   <head>
     <BaseHead
       title={title ? `${SITE_TITLE} - ${title}` : SITE_TITLE}
-      description={description && description.length > 0 ? description: SITE_DESCRIPTION}
+      description={description && description.length > 0
+        ? description
+        : SITE_DESCRIPTION}
       image={image}
     />
   </head>
@@ -54,6 +56,93 @@ const { title, description, image } = Astro.props;
       }
 
       window.localStorage.setItem('theme', theme);
+
+      // scroll spy and highlight current header link, and parent link
+      let menuEl, contentEl, scrollspyMenuItems, contentPos;
+
+      const initElements = () => {
+        if (!menuEl || !contentEl || !scrollspyMenuItems || !contentPos) {
+          menuEl = document.querySelector('[data-scrollspy="#scrollspy-menu"]');
+          contentEl = document.querySelector(
+            '[data-scrollspy-content="#scrollspy-content"]',
+          );
+          scrollspyMenuItems = menuEl.querySelectorAll('a');
+          contentPos = contentEl.getBoundingClientRect().top;
+        }
+      };
+
+      // half of the screen
+      let detectPos = 100;
+      const dataActiveName = 'data-scrollspy-menu-active';
+      const dataActiveParentName = 'data-scrollspy-menu-active-parent';
+      const highlightClassList = ['text-base-content', 'font-bold'];
+
+      const highlightMenu = () => {
+        initElements();
+
+        for (let i = 0; i < scrollspyMenuItems.length; i++) {
+          const el = scrollspyMenuItems[i];
+          const href = el.getAttribute('href');
+          const targetEl = document.querySelector(href);
+
+          if (!targetEl) {
+            continue;
+          }
+
+          const targetPos = targetEl.getBoundingClientRect().top;
+
+          if (targetPos < detectPos + contentPos) {
+            const activeEl = menuEl.querySelector(`[${dataActiveName}]`);
+            if (activeEl) {
+              highlightClassList.forEach((className) => {
+                activeEl.classList.remove(className);
+              });
+              activeEl.removeAttribute(dataActiveName);
+            }
+            highlightClassList.forEach((className) => {
+              el.classList.add(className);
+            });
+            el.setAttribute(dataActiveName, '');
+
+            const parentATag = el
+              .closest('li')
+              ?.closest('ul')
+              ?.closest('li')
+              ?.querySelector('a');
+            if (parentATag) {
+              const activeParentEl = menuEl.querySelector(
+                `[${dataActiveParentName}]`,
+              );
+              if (activeParentEl) {
+                highlightClassList.forEach((className) => {
+                  activeParentEl.classList.remove(className);
+                });
+                activeParentEl.removeAttribute(dataActiveParentName);
+              }
+              highlightClassList.forEach((className) => {
+                parentATag.classList.add(className);
+              });
+              parentATag.setAttribute(dataActiveParentName, '');
+            } else {
+              const activeParentEl = menuEl.querySelector(
+                `[${dataActiveParentName}]`,
+              );
+              if (activeParentEl) {
+                highlightClassList.forEach((className) => {
+                  activeParentEl.classList.remove(className);
+                });
+                activeParentEl.removeAttribute(dataActiveParentName);
+              }
+            }
+          }
+        }
+      };
+
+      highlightMenu();
+
+      window.addEventListener('scroll', () => {
+        highlightMenu();
+      });
     </script>
   </body>
 </html>
