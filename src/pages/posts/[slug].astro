@@ -1,6 +1,7 @@
 ---
 import { type CollectionEntry } from 'astro:content';
 import { Markdown } from 'astro-remote';
+import GithubSlugger from 'github-slugger';
 import { contentfulClient, type BlogPost } from '../../lib/contentful';
 import CodeBlock from '../../components/Markdown/CodeBlock.astro';
 import CodeSpan from '../../components/Markdown/CodeSpan.astro';
@@ -42,6 +43,8 @@ export async function getStaticPaths() {
 }
 type Props = BlogPost;
 
+export const slugger = new GithubSlugger();
+
 const post = Astro.props;
 ---
 
@@ -66,23 +69,25 @@ const post = Astro.props;
   <ContentWrapper>
     <Main>
       <ContentContainer>
-        <Markdown
-          content={post.content}
-          components={{
-            CodeBlock,
-            CodeSpan,
-            Heading,
-            Note,
-            p: Paragraph,
-            a: Link,
-            hr: Split,
-            ul: Ul,
-            ol: Ol,
-            blockquote: Blockquote,
-            img: ImageView,
-            table: Table,
-          }}
-        />
+        <div data-scrollspy-content="#scrollspy-content">
+          <Markdown
+            content={post.content}
+            components={{
+              CodeBlock,
+              CodeSpan,
+              Heading,
+              Note,
+              p: Paragraph,
+              a: Link,
+              hr: Split,
+              ul: Ul,
+              ol: Ol,
+              blockquote: Blockquote,
+              img: ImageView,
+              table: Table,
+            }}
+          />
+        </div>
       </ContentContainer>
       <CategoryList forceBottom />
     </Main>

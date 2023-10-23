@@ -1,4 +1,5 @@
 ---
+import GithubSlugger from 'github-slugger';
 import OutlineItem from './OutlineItem.astro';
 
 type Props = {
@@ -18,9 +19,10 @@ export interface SubItemOutlineItem {
   children: SubItemOutlineItem[];
 }
 
+const slugger = new GithubSlugger();
+
 const outlineArray = [];
 const regex = /^(#+)\s+(.+)$/g;
-const usedIds: { [key: string]: number } = {};
 // h6
 let largestHeader = 6;
 
@@ -30,13 +32,7 @@ for (const line of Astro.props.content.split('\n')) {
   if (match) {
     const level = match[1].length;
     const title = match[2];
-    const id = title.toLowerCase().replace(/ /g, '-');
-    if (usedIds[id]) {
-      usedIds[id]++;
-    } else {
-      usedIds[id] = 1;
-    }
-    const href = usedIds[id] > 1 ? `${id}-${usedIds[id] - 1}` : id;
+    const href = slugger.slug(title);
     outlineArray.push({ level, title, href });
     largestHeader = Math.min(largestHeader, level);
   }
@@ -68,7 +64,10 @@ for (const item of outlineArray) {
 ---
 
 <div class="hidden xl:block xl:sticky xl:top-4">
-  <ul class="menu bg-base-200 ml-4 w-60 rounded-xl 2xl:w-80">
+  <ul
+    class="menu bg-base-200 ml-4 w-60 rounded-xl 2xl:w-80"
+    data-scrollspy="#scrollspy-menu"
+  >
     <span class="text-center text-xl">目次</span>
     {outline.map((item: SubItemOutlineItem) => <OutlineItem item={item} />)}
   </ul>

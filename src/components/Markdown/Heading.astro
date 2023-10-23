@@ -1,6 +1,7 @@
 ---
 import { twMerge } from 'tailwind-merge';
 import clsx from 'clsx';
+import { slugger } from '../../pages/posts/[slug].astro';
 
 interface Props {
   as?: string;
@@ -8,7 +9,7 @@ interface Props {
   className?: string;
 }
 
-const { as: Component, href, ...props } = Astro.props;
+const { as: Component, text, ...props } = Astro.props;
 
 const cls = twMerge(
   clsx({
@@ -20,7 +21,9 @@ const cls = twMerge(
     'text-base my-1': Component === 'h6',
   }),
 );
-const id = href.replace('#', '');
+
+const id = slugger.slug(text);
+const href = `#${id}`;
 ---
 
 <Component class={cls} id={id} {...props}>
