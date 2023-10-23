@@ -3,14 +3,16 @@ import { twMerge } from 'tailwind-merge';
 
 interface Props {
   className?: string;
+  href: string;
 }
 
 const props = Astro.props;
 
 const cls = twMerge(
-  'my-4',
+  'text-info hover:underline',
+  props.href.startsWith('http') ? 'break-words' : '',
   props.className,
-)
+);
 ---
 
-<a class="text-info hover:underline" {...props} target="_blank"><slot /></a>
+<a class={cls} {...props} target="_blank"><slot /></a>
