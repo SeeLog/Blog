@@ -44,6 +44,7 @@ export async function getStaticPaths() {
 type Props = BlogPost;
 
 export const slugger = new GithubSlugger();
+slugger.reset();
 
 const post = Astro.props;
 ---
