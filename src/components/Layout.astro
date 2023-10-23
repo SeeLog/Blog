@@ -66,13 +66,13 @@ const { title, description, image } = Astro.props;
           contentEl = document.querySelector(
             '[data-scrollspy-content="#scrollspy-content"]',
           );
-          scrollspyMenuItems = menuEl.querySelectorAll('a');
-          contentPos = contentEl.getBoundingClientRect().top;
+          scrollspyMenuItems = menuEl?.querySelectorAll('a');
+          contentPos = document.body.getBoundingClientRect().top - contentEl?.getBoundingClientRect().top;
         }
       };
 
       // half of the screen
-      let detectPos = 100;
+      let detectPos = window.innerHeight / 2;
       const dataActiveName = 'data-scrollspy-menu-active';
       const dataActiveParentName = 'data-scrollspy-menu-active-parent';
       const highlightClassList = ['text-base-content', 'font-bold'];
@@ -90,6 +90,7 @@ const { title, description, image } = Astro.props;
           }
 
           const targetPos = targetEl.getBoundingClientRect().top;
+          console.log(targetPos, detectPos + contentPos);
 
           if (targetPos < detectPos + contentPos) {
             const activeEl = menuEl.querySelector(`[${dataActiveName}]`);
