@@ -7,6 +7,14 @@ module.exports = {
   darkMode: 'class',
   plugins: [require('daisyui')],
   daisyui: {
-    themes: ['cupcake', 'dracula'],
+    themes: [
+      {
+        cupcake: {
+          ...require('daisyui/src/theming/themes')['[data-theme=cupcake]'],
+          info: '#0061bf',
+        },
+      },
+      'dracula',
+    ],
   },
 };
