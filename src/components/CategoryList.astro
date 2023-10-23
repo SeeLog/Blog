@@ -36,19 +36,19 @@ type Props = {
 const { forceBottom = false } = Astro.props;
 const bottomOuterCls = 'w-full max-w-4xl';
 const normalOuterCls = 'w-full max-w-4xl xl:w-auto xl:max-w-none';
-const bottomInnerCls = 'flex flex-col gap-4 bg-base-200 h-fit p-4 mt-8 rounded-xl';
-const normalInnerCls = 'flex flex-col gap-4 bg-base-200 h-fit p-4 mt-8 xl:mt-0 xl:ml-4 xl:w-60 2xl:w-80 rounded-xl';
+const bottomInnerCls =
+  'flex flex-col gap-4 bg-base-200 h-fit p-4 mt-8 rounded-xl';
+const normalInnerCls =
+  'flex flex-col gap-4 bg-base-200 h-fit p-4 mt-8 xl:mt-0 xl:ml-4 xl:w-60 2xl:w-80 rounded-xl';
 ---
 
 <div class={forceBottom ? bottomOuterCls : normalOuterCls}>
-  <div
-    class={forceBottom ? bottomInnerCls : normalInnerCls}
-  >
+  <div class={forceBottom ? bottomInnerCls : normalInnerCls}>
     <span class="text-xl text-center">カテゴリー</span>
     {
       menuItems.map((item) => (
-        <ul>
-          <li class="text-lg my-2">{item.category.fields.title}</li>
+        <div>
+          <span class="text-lg my-2">{item.category.fields.title}</span>
           <ul class="flex gap-2">
             {item.tags.map((tag) => (
               <li>
@@ -56,7 +56,7 @@ const normalInnerCls = 'flex flex-col gap-4 bg-base-200 h-fit p-4 mt-8 xl:mt-0 x
               </li>
             ))}
           </ul>
-        </ul>
+        </div>
       ))
     }
   </div>
