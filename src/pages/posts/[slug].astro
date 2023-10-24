@@ -32,7 +32,10 @@ export async function getStaticPaths() {
     props: {
       title: entry.fields.title,
       content: entry.fields.content,
-      date: new Date(entry.fields.date?.toString() ?? '').toLocaleDateString(),
+      date: new Date(entry.fields.date?.toString() ?? '').toLocaleDateString(
+        'ja-JP',
+        { timeZone: 'Asia/Tokyo' },
+      ),
       tags: entry.fields.tags,
       category: entry.fields.category,
       image: entry.fields.image,

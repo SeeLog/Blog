@@ -27,7 +27,11 @@ const props = Astro.props;
               </div>
               <div class="pt-4">{post.description}</div>
               <div class="text-right mt-2">
-                <span>{new Date(String(post.date)).toLocaleDateString()}</span>
+                <span>
+                  {new Date(String(post.date)).toLocaleDateString('ja-JP', {
+                    timeZone: 'Asia/Tokyo',
+                  })}
+                </span>
               </div>
             </div>
           </a>
