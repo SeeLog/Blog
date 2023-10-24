@@ -26,7 +26,7 @@ dependencies:
   '@contentful/rich-text-types':
     specifier: ^16.3.0
     version: 16.3.0
-  '@fontsource/rocknroll-one':
+  '@fontsource/kosugi-maru':
     specifier: ^5.0.7
     version: 5.0.7
   '@react-spring/web':
@@ -1021,8 +1021,8 @@ packages:
     dev: false
     optional: true
 
-  /@fontsource/rocknroll-one@5.0.7:
-    resolution: {integrity: sha512-gI81bYGft4nfDRw7qJU+NCgP3Ed77FpIBZJvfQLT5y05GDKRaJmAJ+d0Gjb253VEW86wCwSNn9i4rBLm+Xtiug==}
+  /@fontsource/kosugi-maru@5.0.7:
+    resolution: {integrity: sha512-lN+e18pLEIQS//6mfK44Okegd6LDtLfxenXCYAKhqnX3hBPPnPLOmtVztCBmnXg2HIS50BQyW+4ee7/w92neUw==}
     dev: false
 
   /@istanbuljs/load-nyc-config@1.1.0:

@@ -8,7 +8,7 @@ module.exports = {
         'vsc-dark-content': '#858585',
       },
       fontFamily: {
-        title: ['RocknRoll One'],
+        title: ['Kosugi Maru', 'sans-serif'],
       },
     },
   },
