@@ -2,7 +2,7 @@
 import { twMerge } from 'tailwind-merge';
 import clsx from 'clsx';
 import hljs from 'highlight.js';
-import 'highlight.js/styles/github-dark-dimmed.css';
+import '../../styles/vsc-dark-plus.css';
 
 interface Props {
   lang: string;
@@ -12,12 +12,30 @@ interface Props {
 const { lang: origLang, code: origCode } = Astro.props;
 
 const [lang, title] = origLang.split(':');
-const code = lang
-  ? hljs.highlight(lang, origCode).value
-  : hljs.highlight('plaintext', origCode).value;
+const highlighted = lang
+  ? hljs.highlight(origCode, {
+      language: lang,
+    }).value
+  : hljs.highlight(origCode, {
+      language: 'plaintext',
+    }).value;
+
+// add line numbers
+const code =
+  '<table>' +
+  highlighted
+    .split('\n')
+    .map(
+      (line, i) =>
+        `<tr><td class="text-right pr-4 select-none">${
+          i + 1
+        }</td><td>${line}</td></tr>`,
+    )
+    .join('\n') +
+  '</table>';
 
 const preClasses = twMerge(
-  `language-${lang} text-sm bg-neutral-700 dark:bg-neutral-800 text-neutral-content p-4 shadow-lg overflow-x-auto`,
+  `hljs language-${lang} text-sm p-4 shadow-lg overflow-x-auto`,
   clsx({
     'rounded-b-xl': title,
     'rounded-e-xl': title,
