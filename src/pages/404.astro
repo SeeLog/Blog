@@ -1,0 +1,21 @@
+---
+import CategoryList from '../components/CategoryList.astro';
+import ContentContainer from '../components/ContentContainer.astro';
+import ContentWrapper from '../components/ContentWrapper.astro';
+import Layout from '../components/Layout.astro';
+import Main from '../components/Main.astro';
+---
+
+<Layout>
+  <div class="py-12">
+    <h1 class="text-center text-4xl">404 Not Found</h1>
+  </div>
+  <ContentWrapper>
+    <Main>
+      <ContentContainer>
+        お探しのページは見つかりませんでした。
+      </ContentContainer>
+    </Main>
+    <CategoryList />
+  </ContentWrapper>
+</Layout>
