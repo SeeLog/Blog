@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import icon from '../images/icon.png';
 import { SITE_TITLE } from '../consts';
 import ThemeButton from './ThemeButton';
+import '@fontsource/rocknroll-one';
 ---
 
 <header class="w-full bg-base-200">
@@ -11,7 +12,7 @@ import ThemeButton from './ThemeButton';
       <div class="w-10">
       <Image src={icon} alt="ろぐみろぐ" width={800} />
       </div>
-      <h2 class="text-2xl pl-2">
+      <h2 class="text-2xl pl-2 font-title">
         {SITE_TITLE}
       </h2>
     </a>

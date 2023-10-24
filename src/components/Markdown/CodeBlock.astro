@@ -1,8 +1,9 @@
 ---
 import { twMerge } from 'tailwind-merge';
 import clsx from 'clsx';
-import hljs from 'highlight.js';
-import '../../styles/vsc-dark-plus.css';
+import Prism from 'prismjs';
+import loadLanguages from 'prismjs/components/index';
+import 'prism-themes/themes/prism-vsc-dark-plus.css';
 
 interface Props {
   lang: string;
@@ -11,14 +12,12 @@ interface Props {
 
 const { lang: origLang, code: origCode } = Astro.props;
 
+loadLanguages();
+
 const [lang, title] = origLang.split(':');
 const highlighted = lang
-  ? hljs.highlight(origCode, {
-      language: lang,
-    }).value
-  : hljs.highlight(origCode, {
-      language: 'plaintext',
-    }).value;
+  ? Prism.highlight(origCode, Prism.languages[lang] ?? {}, lang)
+  : Prism.highlight(origCode, {}, 'plaintext');
 
 // add line numbers
 const code =
@@ -27,7 +26,7 @@ const code =
     .split('\n')
     .map(
       (line, i) =>
-        `<tr><td class="text-right pr-4 select-none">${
+        `<tr><td class="text-right pr-4 select-none text-vsc-dark-content">${
           i + 1
         }</td><td>${line}</td></tr>`,
     )
@@ -35,7 +34,7 @@ const code =
   '</table>';
 
 const preClasses = twMerge(
-  `hljs language-${lang} text-sm p-4 shadow-lg overflow-x-auto`,
+  `language-${lang} !m-0 text-sm p-4 overflow-x-auto`,
   clsx({
     'rounded-b-xl': title,
     'rounded-e-xl': title,
@@ -44,10 +43,10 @@ const preClasses = twMerge(
 );
 ---
 
-<div class="my-6">
+<div class="my-6 shadow">
   {
     title && (
-      <span class="bg-neutral text-neutral-content px-3 py-1 rounded-t-xl shadow-xl">
+      <span class="text-neutral-content px-3 py-1 rounded-t-xl bg-vsc-dark">
         {title}
       </span>
     )
