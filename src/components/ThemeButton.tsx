@@ -49,21 +49,10 @@ export default function ThemeButton() {
 
   return (
     <DarkModeSwitch
+      aria-label="テーマを切り替える"
       onChange={toggleTheme}
       checked={theme === 'dracula' ? true : false}
       size={iconSize}
     />
-    // <button
-    //   className="w-10 h-10 min-h-0 p-0 btn transition rounded-full"
-    //   aria-label="テーマを切り替える"
-    //   onClick={toggleTheme}
-    // >
-    //   <PhMoonStars
-    //     width={iconSize}
-    //     height={iconSize}
-    //     className="hidden dark:block"
-    //   />
-    //   <PhSun width={iconSize} height={iconSize} className="block dark:hidden" />
-    // </button>
   );
 }
