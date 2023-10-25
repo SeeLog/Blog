@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
-import { DarkModeSwitch } from 'react-toggle-dark-mode';
+import { PhMoonStars } from './icon/PhMoonStars';
+import { PhSun } from './icon/PhSun';
 
 const iconSize = 24;
 
@@ -48,11 +49,17 @@ export default function ThemeButton() {
   }, [theme]);
 
   return (
-    <DarkModeSwitch
+    <button
+      className="w-10 h-10 min-h-0 p-0 btn transition rounded-full"
       aria-label="テーマを切り替える"
-      onChange={toggleTheme}
-      checked={theme === 'dracula' ? true : false}
-      size={iconSize}
-    />
+      onClick={toggleTheme}
+    >
+      <PhMoonStars
+        width={iconSize}
+        height={iconSize}
+        className="hidden dark:block"
+      />
+      <PhSun width={iconSize} height={iconSize} className="block dark:hidden" />
+    </button>
   );
 }
