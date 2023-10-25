@@ -81,7 +81,7 @@ export default function ModalInner(props: ModalBackgroundProps) {
       }}
     >
       {/* <Close /> */}
-      <div className="flex h-full w-full items-center">
+      <div className="flex h-full w-full items-center justify-center">
         <animated.div
           ref={divRef}
           style={{
