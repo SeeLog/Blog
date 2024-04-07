@@ -11,6 +11,11 @@ const cls = twMerge(
   'my-4',
   props.className,
 )
+
+const slotHtml = await Astro.slots.render('default');
+const converted = slotHtml.replace(/\r?\n|\r/g, '<br />');
 ---
 
-<p class={cls} {...props}><slot /></p>
+<p class={cls} {...props}>
+  <Fragment set:html={converted} />
+</p>
