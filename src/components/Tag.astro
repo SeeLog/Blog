@@ -8,6 +8,6 @@ const { href } = Astro.props as Props;
 const Container = href ? 'a' : 'div';
 ---
 
-<Container class="badge badge-neutral px-3 py-3" href={href}>
+<Container class="badge badge-neutral px-3 py-3 hover:bg-neutral/70 hover:border-neutral/70" href={href}>
   #<slot />
 </Container>
