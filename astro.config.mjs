@@ -9,5 +9,9 @@ import partytown from "@astrojs/partytown";
 // https://astro.build/config
 export default defineConfig({
   site: 'https://blog.seelog.me',
-  integrations: [mdx(), sitemap(), tailwind(), react(), partytown()]
+  integrations: [mdx(), sitemap(), tailwind(), react(), partytown({
+    config: {
+      forward: ['dataLayer.push'],
+    }
+  })]
 });
