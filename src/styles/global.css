@@ -29,3 +29,85 @@ ol.__md-ol > li > ol {
 ol.__md-ol > li > ol > li > ol {
   list-style-type: lower-alpha !important;
 }
+
+div.markdown-alert {
+  display: flex;
+  align-items: center;
+  @apply flex items-center gap-2;
+  @apply p-2 my-4;
+  @apply rounded-lg;
+}
+
+div.markdown-alert > p > svg {
+  display: inline-block;
+  @apply w-7 h-7;
+}
+
+div.markdown-alert > p:first-child {
+  font-size: 0;
+}
+
+div.markdown-alert-note {
+  @apply bg-info/10;
+  @apply border border-info;
+}
+
+div.markdown-alert-note > p:first-child {
+  @apply text-info;
+}
+
+div.markdown-alert-note > p:first-child > svg {
+  @apply fill-info;
+}
+
+div.markdown-alert-tip {
+  @apply bg-success/10;
+  @apply border border-success;
+}
+
+div.markdown-alert-tip > p:first-child {
+  @apply text-success;
+}
+
+div.markdown-alert-tip > p:first-child > svg {
+  @apply fill-success;
+}
+
+div.markdown-alert-important {
+  @apply bg-primary/10;
+  @apply border border-primary;
+}
+
+div.markdown-alert-important > p:first-child {
+  @apply text-primary;
+}
+
+div.markdown-alert-important > p:first-child > svg {
+  @apply fill-primary;
+}
+
+div.markdown-alert-warning {
+  @apply bg-warning/10;
+  @apply border border-warning;
+}
+
+div.markdown-alert-warning > p:first-child {
+  @apply text-warning;
+}
+
+div.markdown-alert-warning > p:first-child > svg {
+  @apply fill-warning;
+}
+
+div.markdown-alert-caution {
+  @apply bg-error/10;
+  @apply border border-error;
+}
+
+div.markdown-alert-caution > p:first-child {
+  @apply text-error;
+}
+
+div.markdown-alert-caution > p:first-child > svg {
+  @apply fill-error;
+}

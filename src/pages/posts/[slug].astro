@@ -2,6 +2,8 @@
 import { type CollectionEntry } from 'astro:content';
 import { Markdown } from 'astro-remote';
 import GithubSlugger from 'github-slugger';
+import markedAlert from 'marked-alert';
+import markedFootnote from 'marked-footnote';
 import { contentfulClient, type BlogPost } from '../../lib/contentful';
 import CodeBlock from '../../components/Markdown/CodeBlock.astro';
 import CodeSpan from '../../components/Markdown/CodeSpan.astro';
@@ -89,6 +91,15 @@ const post = Astro.props;
               blockquote: Blockquote,
               img: ImageView,
               table: Table,
+            }}
+            sanitize={{ allowComponents: true }}
+            marked={{
+              extensions: [
+                markedAlert(),
+                markedFootnote({
+                  refMarkers: true,
+                }),
+              ],
             }}
           />
         </div>

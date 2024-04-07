@@ -4,6 +4,8 @@ import { twMerge } from 'tailwind-merge';
 interface Props {
   className?: string;
   href: string;
+  ['data-footnote-ref']?: string;
+  ['data-footnote-backref']?: string;
 }
 
 const props = Astro.props;
@@ -13,6 +15,17 @@ const cls = twMerge(
   props.href.startsWith('http') ? 'break-words' : '',
   props.className,
 );
+
+const isFootnote = props['data-footnote-ref'] !== undefined;
+const isFootnoteBack = props['data-footnote-backref'] !== undefined;
 ---
 
-<a class={cls} {...props} target="_blank"><slot /></a>
+<a
+  class={cls}
+  {...props}
+  target={isFootnote || isFootnoteBack ? undefined : '_blank'}
+>
+  {isFootnote && <slot />}
+  {isFootnoteBack && <>⮐</>}
+  {!isFootnote && !isFootnoteBack && <slot />}
+</a>
