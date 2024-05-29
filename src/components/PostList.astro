@@ -14,7 +14,7 @@ const props = Astro.props;
       props.posts.map((post) => {
         return (
           <a href={`/posts/${post.slug}`} class="flex flex-col justify-between h-full">
-            <div class="flex flex-col bg-base-100 px-8 py-4 rounded-xl h-full hover:bg-base-100/50 transition-colors duration-500 ease-in-out outline outline-1 outline-base-content/20 hover:outline-accent">
+            <div class="flex flex-col bg-base-100 px-8 py-4 rounded-xl h-full hover:bg-base-100/50 transition-colors duration-200 ease-in-out outline outline-1 outline-base-content/20 hover:outline-accent">
               <div class="mb-4 border-b border-primary">
                 <span class="text-xl">{post.title}</span>
               </div>
