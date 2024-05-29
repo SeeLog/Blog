@@ -34,12 +34,12 @@ type Props = {
 };
 
 const { forceBottom = false } = Astro.props;
-const bottomOuterCls = 'w-full max-w-4xl';
-const normalOuterCls = 'w-full max-w-4xl xl:w-auto xl:max-w-none';
+const bottomOuterCls = 'w-full';
+const normalOuterCls = 'w-full xl:w-auto xl:max-w-none';
 const bottomInnerCls =
-  'flex flex-col gap-4 bg-base-200 h-fit p-4 mt-8 rounded-xl';
+  'flex flex-col gap-4 bg-base-200 h-fit p-4 mt-8 rounded-xl shadow-[0px_0px_8px_2px_rgba(0,0,0,0.15)] dark:shadow-[0px_0px_8px_2px_rgba(255,255,255,0.15)]';
 const normalInnerCls =
-  'flex flex-col gap-4 bg-base-200 h-fit p-4 mt-8 xl:mt-0 xl:ml-4 xl:w-60 2xl:w-80 rounded-xl';
+  'flex flex-col gap-4 bg-base-200 h-fit p-4 mt-8 xl:mt-0 xl:ml-4 xl:w-60 2xl:w-80 rounded-xl shadow-[0px_0px_8px_2px_rgba(0,0,0,0.15)] dark:shadow-[0px_0px_8px_2px_rgba(255,255,255,0.15)]';
 ---
 
 <div class={forceBottom ? bottomOuterCls : normalOuterCls}>
@@ -49,7 +49,7 @@ const normalInnerCls =
       menuItems.map((item) => (
         <div>
           <span class="text-lg my-2">{item.category.fields.title}</span>
-          <ul class="flex gap-2">
+          <ul class="flex gap-2 flex-wrap">
             {item.tags.map((tag) => (
               <li>
                 <Tag href={`/tags/${tag.slug}`}>{tag.title}</Tag>
