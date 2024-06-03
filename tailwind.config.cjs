@@ -16,9 +16,10 @@ module.exports = {
   plugins: [require('daisyui')],
   daisyui: {
     themes: [
+      // 'cupcake',
       {
         cupcake: {
-          ...require('daisyui/src/theming/themes')['[data-theme=cupcake]'],
+          ...require('daisyui/src/theming/themes')['cupcake'],
           info: '#0061bf',
         },
       },
