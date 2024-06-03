@@ -5,7 +5,7 @@ import {
   type BlogPost,
   TagSkeleton,
 } from '../../../lib/contentful';
-import { GetStaticPathsOptions, Page } from 'astro';
+import { GetStaticPathsOptions, type Page } from 'astro';
 import Layout from '../../../components/Layout.astro';
 import Main from '../../../components/Main.astro';
 import PostList from '../../../components/PostList.astro';
@@ -71,7 +71,7 @@ const params = Astro.params;
   <ContentWrapper>
     <Main>
       <div
-        class="p-4 rounded-xl shadow-[0px_0px_8px_2px_rgba(0,0,0,0.15)] dark:shadow-[0px_0px_8px_2px_rgba(255,255,255,0.15)]"
+        class="px-8 py-6 rounded-xl shadow-[0px_0px_8px_2px_rgba(0,0,0,0.15)] dark:shadow-[0px_0px_8px_2px_rgba(255,255,255,0.15)]"
       >
         <PostList posts={pageContents} />
         <div class="flex justify-center mt-8">

@@ -8,6 +8,8 @@ import Tag from './Tag.astro';
 
 const tags = await contentfulClient.getEntries<TagSkeleton>({
   content_type: 'blogTag',
+  // @ts-ignore
+  order: 'fields.sort',
 });
 const categories = await contentfulClient.getEntries<TagSkeleton>({
   content_type: 'blogCategory',
